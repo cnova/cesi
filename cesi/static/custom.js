@@ -164,7 +164,12 @@ var $showdeluserpage = function(){
                     $table.append('<tr class="'+username+'"></tr>');
 
                     var $maintr = $table.find('tr').last();
-                    $maintr.append('<td>'+username+'</td> <td>'+usertype+'</td><td><button name="'+data['names'][i]+'" class="glyphicon glyphicon-trash btn btn-sm btn-success btn-block delete"></button></td>');
+                    $maintr.append(
+                        '<td>'+username+'</td> ' +
+                        '<td>'+usertype+'</td>' +
+                        '<td>' +
+                            '<button name="'+data['names'][i]+'" class="glyphicon glyphicon-trash btn btn-sm btn-success btn-block delete"></button>' +
+                        '</td>');
 
                     var $delbtn =$maintr.find('button').last();
                     $delbtn.click($delete_user);
@@ -365,7 +370,7 @@ var $buttonactions = function(){
                         $name = "/node/"+data['nodename'] + "/process/" + data['data']['group'] + ":" + data['data']['name'] + "/restart";
                         $restart.attr('name',$name );
                         $restart.attr('value',"Restart");
-                        $restart.html("Restart");
+                        $restart.html("<i class=\"fa fa-repeat\" aria-hidden=\"true\"></i>");
                         
                         $td = $td.next();
                         $stop = $td.children('button').first();
@@ -373,21 +378,21 @@ var $buttonactions = function(){
                         $name2 = "/node/"+data['nodename'] + "/process/" + data['data']['group'] + ":" + data['data']['name'] + "/stop";
                         $stop.attr('name',$name2 );
                         $stop.attr('value',"Stop");
-                        $stop.html("Stop");
+                        $stop.html("<i class=\"fa fa-stop\" aria-hidden=\"true\"></i>");
                     }else if(data['data']['state']==0){
                         $start = $td.children('button');
                         $start.attr('class',"btn btn-primary btn-block");
                         $name = "/node/"+data['nodename'] + "/process/" + data['data']['group'] + ":" + data['data']['name'] + "/start";
                         $start.attr('name',$name );
                         $start.attr('value',"Start");
-                        $start.html("Start");
+                        $start.html("<i class=\"fa fa-play\" aria-hidden=\"true\"></i>");
 
                         $td = $td.next();
                         $stop = $td.children('button').first();
                         $stop.attr('class',"btn btn-primary btn-block disabled");
                         $stop.attr('name'," ");
                         $stop.attr('value',"Stop");
-                        $stop.html("Stop");
+                        $stop.html("<i class=\"fa fa-stop\" aria-hidden=\"true\"></i>");
                     }
                 }else if(data['status'] == "error2"){
                     noty({
@@ -454,7 +459,7 @@ var $selectgroupenv = function(){
         $checkbox.prop("checked", false);
         
         $(this).parent().parent().find('input').each(function(){
-            if($(this).prop('checked') == true){
+            if($(this).prop('checked')){
                 $checkcount = $checkcount + 1;
             }
         });
@@ -493,7 +498,7 @@ var $selectgroupenv = function(){
         $checkbox.prop("checked", true);
 
         $(this).parent().parent().find('input').each(function(){
-            if($(this).prop('checked') == true){
+            if($(this).prop('checked')){
                 $checkcount = $checkcount + 1;
             }
         });
@@ -505,7 +510,7 @@ var $selectgroupenv = function(){
             $panel.append('<div class="panel-heading"><span class="glyphicon glyphicon-th-list"></span> '+ $group_name +'</div>');
 
             if($usertype == 0 || $usertype == 1){
-                $panel.children('div').first().append('<div style="float:right;"><button class="btn btn-warning btn-sm multibtn" name="restart" >Restart</button><button class="btn btn-warning btn-sm multibtn" name="start" >Start</button><button class="btn btn-warning btn-sm multibtn" name="stop" >Stop</button></div>');
+                $panel.children('div').first().append('<div style="float:right;"><button class="btn btn-warning btn-sm multibtn" name="restart" ><i class="fa fa-repeat" aria-hidden="true"></i></button><button class="btn btn-warning btn-sm multibtn" name="start" ><i class="fa fa-play" aria-hidden="true"></button><button class="btn btn-warning btn-sm multibtn" name="stop" ><i class="fa fa-stop" aria-hidden="true"></i></button></div>');
                 $panel.find("button[class~='multibtn']").each(function(){
                     $(this).click($multievent);
                 });
@@ -513,7 +518,7 @@ var $selectgroupenv = function(){
 
             $panel.append('<table class="table table-bordered"></table>');
             $table = $panel.find('table');
-            $table.append('<tr class="active"><th>Pid</th> <th>Environment</th> <th>Node name</th> <th>Name</th> <th>Uptime</th> <th>State</th> </tr>');
+            $table.append('<tr class="active"><th>Pid</th> <th>Environment</th> <th>Node name</th> <th>Name</th> <th>Uptime</th> <th>State</th></tr>');
             
             if($usertype == 0 || $usertype == 1){
                 $table.find('tr').first().prepend('<th><input type="checkbox" class="multiple"></th>');
@@ -574,25 +579,25 @@ var $selectgroupenv = function(){
                             if( $state==20 ){
                                 $tr.append('<td></td>');
                                 $td = $tr.children('td').last();
-                                $td.append('<button place="group" class="btn btn-primary btn-block act" env="'+$environment_name+'" name="/node/'+$nodename+'/process/'+$group_name+':'+$name+'/restart" value="Restart">Restart</button>');
+                                $td.append('<button place="group" class="btn btn-primary btn-block act" env="'+$environment_name+'" name="/node/'+$nodename+'/process/'+$group_name+':'+$name+'/restart" value="Restart"><i class="fa fa-repeat" aria-hidden="true"></i></button>');
                                 var $btn_restart = $td.children('button').first();
                                 $btn_restart.click($buttonactions);
         
                                 $tr.append('<td></td>');
                                 var $td = $tr.children('td').last();
-                                $td.append('<button place="group" class="btn btn-primary btn-block act" env="'+$environment_name+'" name="/node/'+$nodename+'/process/'+$group_name+':'+$name+'/stop" value="Stop">Stop</button>');
+                                $td.append('<button place="group" class="btn btn-primary btn-block act" env="'+$environment_name+'" name="/node/'+$nodename+'/process/'+$group_name+':'+$name+'/stop" value="Stop"><i class="fa fa-stop" aria-hidden="true"></i></button>');
                                 var $btn_stop = $td.children('button').first();
                                 $btn_stop.click($buttonactions);
                             }else if($state==0){
                                 $tr.append('<td></td>');
                                 var $td= $tr.children('td').last();;
-                                $td.append('<button place="group" class="btn btn-primary btn-block act" env="'+$environment_name+'" name="/node/'+$nodename+'/process/'+$group_name+':'+$name+'/start" value="Start">Start</button>');
+                                $td.append('<button place="group" class="btn btn-primary btn-block act" env="'+$environment_name+'" name="/node/'+$nodename+'/process/'+$group_name+':'+$name+'/start" value="Start"><i class="fa fa-play" aria-hidden="true"></button>');
                                 var $btn_restart = $td.children('button').first();
                                 $btn_restart.click($buttonactions);
         
                                 $tr.append('<td></td>');
                                 var $td = $tr.children('td').last();
-                                $td.append('<button place="group" class="btn btn-primary btn-block disabled act" value="Stop">Stop</button>');
+                                $td.append('<button place="group" class="btn btn-primary btn-block disabled act" value="Stop"><i class="fa fa-stop" aria-hidden="true"></i></button>');
                                 var $btn_stop = $td.children('button').first();
                                 $btn_stop.click($buttonactions);
                             }
@@ -600,7 +605,7 @@ var $selectgroupenv = function(){
     
                         if($usertype == 0 || $usertype == 1 || $usertype == 2 ){
                             //Readlog
-                             $tr.append('<td><a class="btn btn-primary btn-block act" nodename="'+$nodename+'" processgroup="'+$group_name+'" processname="'+$name+'" url="/node/'+$nodename+'/process/'+$group_name+':'+$name+'/readlog"> Readlog </a></td>');
+                             $tr.append('<td><a class="btn btn-primary btn-block act" nodename="'+$nodename+'" processgroup="'+$group_name+'" processname="'+$name+'" url="/node/'+$nodename+'/process/'+$group_name+':'+$name+'/readlog"> <i class="fa fa-file-text-o" aria-hidden="true"></i> </a></td>');
                              var $readlog = $tr.children('td').last().children('a').first();
     
                              $readlog.click(function(){
@@ -747,25 +752,25 @@ var $selectgroupenv = function(){
                                 if( $state==20 ){
                                     $tr.append('<td></td>');
                                     $td = $tr.children('td').last();
-                                        $td.append('<button place="group" class="btn btn-primary btn-block act" env="'+$environment_name+'" name="/node/'+$nodename+'/process/'+$group_name+':'+$name+'/restart" value="Restart">Restart</button>');
+                                        $td.append('<button place="group" class="btn btn-primary btn-block act" env="'+$environment_name+'" name="/node/'+$nodename+'/process/'+$group_name+':'+$name+'/restart" value="Restart"><i class="fa fa-repeat" aria-hidden="true"></i></button>');
                                 var $btn_restart = $td.children('button').first();
                                     $btn_restart.click($buttonactions);
       
                                     $tr.append('<td></td>');
                                     var $td = $tr.children('td').last();
-                                    $td.append('<button place="group" class="btn btn-primary btn-block act" env="'+$environment_name+'" name="/node/'+$nodename+'/process/'+$group_name+':'+$name+'/stop" value="Stop">Stop</button>');
+                                    $td.append('<button place="group" class="btn btn-primary btn-block act" env="'+$environment_name+'" name="/node/'+$nodename+'/process/'+$group_name+':'+$name+'/stop" value="Stop"><i class="fa fa-stop" aria-hidden="true"></i></button>');
                                     var $btn_stop = $td.children('button').first();
                                     $btn_stop.click($buttonactions);
                                 }else if($state==0){
                                     $tr.append('<td></td>');
                                     var $td= $tr.children('td').last();;
-                                    $td.append('<button place="group" class="btn btn-primary btn-block act" env="'+$environment_name+'" name="/node/'+$nodename+'/process/'+$group_name+':'+$name+'/start" value="Start">Start</button>');
+                                    $td.append('<button place="group" class="btn btn-primary btn-block act" env="'+$environment_name+'" name="/node/'+$nodename+'/process/'+$group_name+':'+$name+'/start" value="Start"><i class="fa fa-play" aria-hidden="true"></button>');
                                     var $btn_restart = $td.children('button').first();
                                     $btn_restart.click($buttonactions);
       
                                     $tr.append('<td></td>');
                                     var $td = $tr.children('td').last();
-                                    $td.append('<button place="group" class="btn btn-primary btn-block disabled act" value="Stop">Stop</button>');
+                                    $td.append('<button place="group" class="btn btn-primary btn-block disabled act" value="Stop"><i class="fa fa-stop" aria-hidden="true"></i></button>');
                                     var $btn_stop = $td.children('button').first();
                                     $btn_stop.click($buttonactions);
                                 }
@@ -773,7 +778,7 @@ var $selectgroupenv = function(){
     
 			    if($usertype == 0 || $usertype == 1 || $usertype == 2){
                             //Readlog
-                            $tr.append('<td><a class="btn btn-primary btn-block act" nodename="'+$nodename+'" processgroup="'+$group_name+'" processname="'+$name+'" url="/node/'+$nodename+'/process/'+$group_name+':'+$name+'/readlog"> Readlog </a></td>');
+                            $tr.append('<td><a class="btn btn-primary btn-block act" nodename="'+$nodename+'" processgroup="'+$group_name+'" processname="'+$name+'" url="/node/'+$nodename+'/process/'+$group_name+':'+$name+'/readlog"> <i class="fa fa-file-text-o" aria-hidden="true"></i> </a></td>');
                             var $readlog = $tr.children('td').last().children('a').first();
     
                             $readlog.click(function(){
@@ -855,7 +860,7 @@ var $selectnode = function(){
     var $maindiv = $("#maindiv");
     var $dashboardiv = $(".dash");
     $dashboardiv.empty();
-    
+
     var $logdiv = $("#dialog");
     $logdiv.empty();
 
@@ -885,7 +890,7 @@ var $selectnode = function(){
     var $appendlist=[];
     var $removelist=[];
 
-// List of cheked unchecked node list before clik event    
+// List of cheked unchecked node list before clik event
     $( ".ajax2 > a > input:checked" ).each(function() {
         var name = $(this).attr('value')
         if( $oldcheckednodelist.indexOf(name) == -1 ){
@@ -958,104 +963,134 @@ var $selectnode = function(){
         $panel.remove();
     });
 
-    $appendlist.forEach(function(nodename) { 
+    //cria entrada pra cada nó no cesi.conf
+    //itera no resultado de hosts de cada nó
+    var nodes = [];
+    $appendlist.forEach(function(nodename) {
         var $url = "/node/"+nodename
         $.ajax({
             url: $url,
             dataType: 'json',
             success: function(result){
-                $maindiv.prepend('<div class="panel panel-primary panel-custom" id="panel'+nodename+'"></div>');
-                var $panel = $("#panel"+nodename);
-                $panel.append('<div class="panel-heading"><span class="glyphicon glyphicon-th-list"></span> '+ nodename +'</div>');
+                for(var $counter = 0; $counter < result['process_info'].length; $counter++) {
+                    if (!nodes.includes(result.process_info[$counter].group)) {
+                        nodes.push(result.process_info[$counter].group);
+                        // console.log(result.process_info[$counter].group);
+                        $maindiv.prepend('<div class="panel panel-primary panel-custom" id="panel'+result.process_info[$counter].group+'"></div>');
+                        var $panel = $("#panel"+result.process_info[$counter].group);
+                        $panel.append('<div class="panel-heading"><span class="glyphicon glyphicon-th-list"></span> '+ result.process_info[$counter].group +'</div>');
 
-                if($usertype == 0 || $usertype == 1){
-                    $panel.children('div').first().append('<div style="float:right;"><button class="btn btn-warning btn-sm multibtn" name="restart" >Restart</button><button class="btn btn-warning btn-sm multibtn" name="start" >Start</button><button class="btn btn-warning btn-sm multibtn" name="stop" >Stop</button></div>'); 
-                    $panel.find("button[class~='multibtn']").each(function(){
-                        $(this).click($multievent);
-                    });
-                }
-                
-                $panel.append('<table class="table table-bordered" id="table'+nodename+'" ></table>');
-                var $table = $("#table"+nodename);
-                $table.append('<tr class="active"><th>Pid</th> <th>Name</th> <th>Group</th> <th>Uptime</th> <th>State</th> </tr>');
-                if($usertype == 0 || $usertype == 1){
-                    $table.find('tr').first().prepend('<th><input type="checkbox" class="multiple"></th>');
-                }
-
-                $table.find("input[class='multiple']").change($multiplecheckbox);
-                for(var $counter = 0; $counter < result['process_info'].length; $counter++){
-                    var description = result['process_info'][$counter]['description'];
-                    $table = $table.append('<tr class="process_info" id="'+nodename+$counter+'"></tr>');
-                    var $tr_p = $('#'+nodename+$counter);
-                    var $pid = result['process_info'][$counter]['pid'];
-                    var $name = result['process_info'][$counter]['name'];
-                    var $group = result['process_info'][$counter]['group'];
-                    var $uptime = description.match('uptime') != null ? description.replace(/^(.+uptime\s)*(.+)$/, '$2') : '-';
-                    var $state = result['process_info'][$counter]['state'];
-                    var $statename = result['process_info'][$counter]['statename'];
-                    if($usertype == 0 || $usertype == 1){
-                        //check
-                        $tr_p.append('<td> <input type="checkbox" class="single" node="'+nodename+'" procname="'+$group+':'+$name+'"> </td>');
-                    }
-                    //pid
-                    if( $pid == 0 ){
-                        $tr_p.append('<td> - </td>');
-                    }else{
-                        $tr_p.append('<td>'+ $pid + '</td>');
-                    }
-
-                   //name
-                   $tr_p.append('<td>'+ $name + '</td>')
-
-                   //group
-                   $tr_p.append('<td>'+ $group + '</td>');
-
-                   //uptime
-                   $tr_p.append('<td>'+ $uptime + '</td>');
-
-                   //statename
-                   if( $state==0 || $state==40 || $state==100 || $state==200 ){
-                       $tr_p.append('<td class="alert alert-danger">'+ $statename + '</td>');
-                   }else if($state==10 || $state==20){
-                       $tr_p.append('<td class="alert alert-success">'+ $statename + '</td>');
-                   }else{
-                       $tr_p.append('<td class="alert alert-warning">'+ $statename + '</td>');
-                   }
-
-                   //buttons
-                   if($usertype == 0 || $usertype == 1){
-                       if( $state==20 ){
-                           $tr_p.append('<td></td>');
-                           $td_p = $tr_p.children('td').last();
-                           $td_p.append('<button place="node" class="btn btn-primary btn-block act" name="/node/'+nodename+'/process/'+$group+':'+$name+'/restart" value="Restart">Restart</button>');
-                           var $btn_restart = $td_p.children('button').first();
-                           $btn_restart.click($buttonactions);
-
-                           $tr_p.append('<td></td>');
-                           var $td_p = $tr_p.children('td').last();
-                           $td_p.append('<button place="node" class="btn btn-primary btn-block act" name="/node/'+nodename+'/process/'+$group+':'+$name+'/stop" value="Stop">Stop</button>');
-                           var $btn_stop = $td_p.children('button').first();
-                           $btn_stop.click($buttonactions);
-                        }else if($state==0){
-                           $tr_p.append('<td></td>');
-                           var $td_p = $tr_p.children('td').last();;
-                           $td_p.append('<button place="node" class="btn btn-primary btn-block act" name="/node/'+nodename+'/process/'+$group+':'+$name+'/start" value="Start">Start</button>');
-                           var $btn_restart = $td_p.children('button').first();
-                           $btn_restart.click($buttonactions);
-
-                           $tr_p.append('<td></td>');
-                           var $td_p = $tr_p.children('td').last();
-                           $td_p.append('<button place="node" class="btn btn-primary btn-block disabled act" value="Stop">Stop</button>');
-                           var $btn_stop = $td_p.children('button').first();
-                           $btn_stop.click($buttonactions);
+                        if($usertype == 0 || $usertype == 1){
+                            $panel.children('div').first().append(
+                                '<div style="float:right;">' +
+                                    '<button class="btn btn-warning btn-sm multibtn" name="restart" >' +
+                                        '<i class="fa fa-repeat" aria-hidden="true"></i>' +
+                                    '</button>' +
+                                    '<button class="btn btn-warning btn-sm multibtn" name="start" >' +
+                                        '<i class="fa fa-play" aria-hidden="true"></i>' +
+                                    '</button>' +
+                                    '<button class="btn btn-warning btn-sm multibtn" name="stop" >' +
+                                        '<i class="fa fa-stop" aria-hidden="true"></i>' +
+                                    '</button>' +
+                                '</div>');
+                            $panel.find("button[class~='multibtn']").each(function(){
+                                $(this).click($multievent);
+                            });
                         }
+                        //create table for each node in conf file
+                        $panel.append('<table class="table table-bordered" id="table'+result.process_info[$counter].group+'" ></table>');
+                        var $table = $("#table"+result.process_info[$counter].group);
+                        $table.append('<tr class="active"><th >Pid</th> <th >Name</th> <th >Group</th> <th >Uptime</th> <th class="col-lg-2">State</th>  <th colspan="4" class="col-lg-2">Action</th> </tr>');
+                        if($usertype == 0 || $usertype == 1){
+                            $table.find('tr').first().prepend('<th><input type="checkbox" class="multiple"></th>');
+                        }
+                        $table.find("input[class='multiple']").change($multiplecheckbox);
                     }
+                    //insert rows in groups
+                        var $table = $("#table"+result.process_info[$counter].group);
+                        var description = result['process_info'][$counter]['description'];
+                        $table = $table.append('<tr class="process_info" id="'+nodename+$counter+'"></tr>');
+                        var $tr_p = $('#'+nodename+$counter);
+                        var $pid = result['process_info'][$counter]['pid'];
+                        var $name = result['process_info'][$counter]['name'];
+                        var $group = result['process_info'][$counter]['group'];
+                        var $uptime = description.match('uptime') != null ? description.replace(/^(.+uptime\s)*(.+)$/, '$2') : '-';
+                        var $state = result['process_info'][$counter]['state'];
+                        var $statename = result['process_info'][$counter]['statename'];
+                        if($usertype == 0 || $usertype == 1){
+                            //check
+                            $tr_p.append('<td> <input type="checkbox" class="single" node="'+nodename+'" procname="'+$group+':'+$name+'"> </td>');
+                        }
+                        //pid
+                        if( $pid == 0 ){
+                            $tr_p.append('<td> - </td>');
+                        }else{
+                            $tr_p.append('<td>'+ $pid + '</td>');
+                        }
 
+                        //name
+                        $tr_p.append('<td>'+ $name + '</td>')
+
+                        //group
+                        $tr_p.append('<td>'+ $group + '</td>');
+
+                        //uptime
+                        $tr_p.append('<td>'+ $uptime + '</td>');
+
+                        //statename
+                        if( $state==0 || $state==40 || $state==100 || $state==200 ){
+                            $tr_p.append('<td class="alert alert-danger">'+ $statename + '</td>');
+                        }else if($state==10 || $state==20){
+                            $tr_p.append('<td class="alert alert-success">'+ $statename + '</td>');
+                        }else{
+                            $tr_p.append('<td class="alert alert-warning">'+ $statename + '</td>');
+                        }
+
+                        //buttons
+                        if($usertype == 0 || $usertype == 1){
+                            if( $state==20 ){
+                                $tr_p.append('<td></td>');
+                                $td_p = $tr_p.children('td').last();
+                                $td_p.append(
+                                    '<button place="node" class="btn btn-primary btn-block act" name="/node/'+nodename+'/process/'+$group+':'+$name+'/restart" value="Restart">' +
+                                        '<i class="fa fa-repeat" aria-hidden="true"></i>' +
+                                    '</button>');
+                                var $btn_restart = $td_p.children('button').first();
+                                $btn_restart.click($buttonactions);
+
+                                $tr_p.append('<td></td>');
+                                var $td_p = $tr_p.children('td').last();
+                                $td_p.append(
+                                    '<button place="node" class="btn btn-primary btn-block act" name="/node/'+nodename+'/process/'+$group+':'+$name+'/stop" value="Stop">' +
+                                        '<i class="fa fa-stop" aria-hidden="true"></i>' +
+                                    '</button>');
+                                var $btn_stop = $td_p.children('button').first();
+                                $btn_stop.click($buttonactions);
+                            }else if($state==0){
+                                $tr_p.append('<td></td>');
+                                var $td_p = $tr_p.children('td').last();;
+                                $td_p.append(
+                                    '<button place="node" class="btn btn-primary btn-block act" name="/node/'+nodename+'/process/'+$group+':'+$name+'/start" value="Start">' +
+                                        '<i class="fa fa-play" aria-hidden="true"></i>' +
+                                    '</button>');
+                                var $btn_restart = $td_p.children('button').first();
+                                $btn_restart.click($buttonactions);
+
+                                $tr_p.append('<td></td>');
+                                var $td_p = $tr_p.children('td').last();
+                                $td_p.append('' +
+                                    '<button place="node" class="btn btn-primary btn-block disabled act" value="Stop">' +
+                                        '<i class="fa fa-stop" aria-hidden="true"></i>' +
+                                    '</button>');
+                                var $btn_stop = $td_p.children('button').first();
+                                $btn_stop.click($buttonactions);
+                            }
+                        }
                     if($usertype == 0 || $usertype == 1 || $usertype == 2){
                         //Readlog
-                        $tr_p.append('<td><a class="btn btn-primary btn-block act" nodename="'+nodename+'" processgroup="'+$group+'" processname="'+$name+'" url="/node/'+nodename+'/process/'+$group+':'+$name+'/readlog"> Readlog </a></td>');
+                        $tr_p.append('<td><a class="btn btn-primary btn-block act" nodename="'+nodename+'" processgroup="'+$group+'" processname="'+$name+'" url="/node/'+nodename+'/process/'+$group+':'+$name+'/readlog"> <i class="fa fa-file-text-o" aria-hidden="true"></i> </a></td>');
                         var $readlog = $tr_p.children('td').last().children('a').first();
-    
+
                         $readlog.click(function(){
                             var url=$(this).attr('url');
                             var nodename=$(this).attr('nodename');
@@ -1121,14 +1156,163 @@ var $selectnode = function(){
                                             type: 'warning',
                                             closeWith: ['click']
                                         });
-    
+
                                     }
                                 }
                             });
                         });
                     }
                 }
-            }  
+
+
+
+                //add line in node table, for each host in node
+                /*for(var $counter = 0; $counter < result['process_info'].length; $counter++){
+                    var description = result['process_info'][$counter]['description'];
+                    $table = $table.append('<tr class="process_info" id="'+nodename+$counter+'"></tr>');
+                    var $tr_p = $('#'+nodename+$counter);
+                    var $pid = result['process_info'][$counter]['pid'];
+                    var $name = result['process_info'][$counter]['name'];
+                    var $group = result['process_info'][$counter]['group'];
+                    var $uptime = description.match('uptime') != null ? description.replace(/^(.+uptime\s)*(.+)$/, '$2') : '-';
+                    var $state = result['process_info'][$counter]['state'];
+                    var $statename = result['process_info'][$counter]['statename'];
+                    if($usertype == 0 || $usertype == 1){
+                        //check
+                        $tr_p.append('<td> <input type="checkbox" class="single" node="'+nodename+'" procname="'+$group+':'+$name+'"> </td>');
+                    }
+                    //pid
+                    if( $pid == 0 ){
+                        $tr_p.append('<td> - </td>');
+                    }else{
+                        $tr_p.append('<td>'+ $pid + '</td>');
+                    }
+
+                   //name
+                   $tr_p.append('<td>'+ $name + '</td>')
+
+                   //group
+                   $tr_p.append('<td>'+ $group + '</td>');
+
+                   //uptime
+                   $tr_p.append('<td>'+ $uptime + '</td>');
+
+                   //statename
+                   if( $state==0 || $state==40 || $state==100 || $state==200 ){
+                       $tr_p.append('<td class="alert alert-danger">'+ $statename + '</td>');
+                   }else if($state==10 || $state==20){
+                       $tr_p.append('<td class="alert alert-success">'+ $statename + '</td>');
+                   }else{
+                       $tr_p.append('<td class="alert alert-warning">'+ $statename + '</td>');
+                   }
+
+                   //buttons
+                   if($usertype == 0 || $usertype == 1){
+                       if( $state==20 ){
+                           $tr_p.append('<td></td>');
+                           $td_p = $tr_p.children('td').last();
+                           $td_p.append('<button place="node" class="btn btn-primary btn-block act" name="/node/'+nodename+'/process/'+$group+':'+$name+'/restart" value="Restart"><i class="fa fa-repeat" aria-hidden="true"></i></button>');
+                           var $btn_restart = $td_p.children('button').first();
+                           $btn_restart.click($buttonactions);
+
+                           $tr_p.append('<td></td>');
+                           var $td_p = $tr_p.children('td').last();
+                           $td_p.append('<button place="node" class="btn btn-primary btn-block act" name="/node/'+nodename+'/process/'+$group+':'+$name+'/stop" value="Stop"><i class="fa fa-stop" aria-hidden="true"></i></button>');
+                           var $btn_stop = $td_p.children('button').first();
+                           $btn_stop.click($buttonactions);
+                        }else if($state==0){
+                           $tr_p.append('<td></td>');
+                           var $td_p = $tr_p.children('td').last();;
+                           $td_p.append('<button place="node" class="btn btn-primary btn-block act" name="/node/'+nodename+'/process/'+$group+':'+$name+'/start" value="Start"><i class="fa fa-play" aria-hidden="true"></button>');
+                           var $btn_restart = $td_p.children('button').first();
+                           $btn_restart.click($buttonactions);
+
+                           $tr_p.append('<td></td>');
+                           var $td_p = $tr_p.children('td').last();
+                           $td_p.append('<button place="node" class="btn btn-primary btn-block disabled act" value="Stop"><i class="fa fa-stop" aria-hidden="true"></i></button>');
+                           var $btn_stop = $td_p.children('button').first();
+                           $btn_stop.click($buttonactions);
+                        }
+                    }
+
+                    if($usertype == 0 || $usertype == 1 || $usertype == 2){
+                        //Readlog
+                        $tr_p.append('<td><a class="btn btn-primary btn-block act" nodename="'+nodename+'" processgroup="'+$group+'" processname="'+$name+'" url="/node/'+nodename+'/process/'+$group+':'+$name+'/readlog"> <i class="fa fa-file-text-o" aria-hidden="true"></i> </a></td>');
+                        var $readlog = $tr_p.children('td').last().children('a').first();
+
+                        $readlog.click(function(){
+                            var url=$(this).attr('url');
+                            var nodename=$(this).attr('nodename');
+                            var processname=$(this).attr('processname');
+                            var processgroup=$(this).attr('processgroup');
+                            var classname = nodename+"_"+processgroup+"_"+processname
+                            var $dia = $("."+classname);
+                            var timer;
+
+                            if($dia.length==0){
+                                $logdiv.append('<div class="'+classname+'"></div>');
+                                $dia = $("div[class='"+classname+"']");
+                            }
+                            $.ajax({
+                                url: url,
+                                dataType: 'json',
+                                success: function(log){
+                                    if (log['status']=="success"){
+                                        $dia.html('<pre>'+log['log']+'</pre>');
+                                        $dia.dialog({
+                                            open: function(){
+                                                timer = setInterval(function () {
+                                                    $.ajax({
+                                                        url: url,
+                                                        dataType: 'json',
+                                                        success: function(log){
+                                                            $dia.html('<pre>'+log['log']+'</pre>');
+                                                        }
+                                                    });
+                                                },1000);
+                                            },
+                                            close: function(){
+                                                console.log("kapandiii");
+                                                clearInterval(timer);
+                                            },
+                                            title: classname,
+                                            position: {
+                                                my: 'center top',
+                                                at: 'center center',
+                                                'of': $('#maindiv')
+                                            },
+                                            minHeight: 320,
+                                            minWidth: 640,
+                                            show: {
+                                                effect: "blind",
+                                                duration: 500
+                                            },
+                                            hide: {
+                                                effect: "clip",
+                                                duration: 500,
+                                            }
+                                        }).parent().resizable({
+                                            containment: "#page-wrapper"
+                                        }).draggable({
+                                            containment: "#page-wrapper",
+                                            opacity: 0.70
+                                        });
+                                    }else{
+                                        noty({
+                                            timeout: 5000,
+                                            layout: 'bottom',
+                                            text: log['message'],
+                                            type: 'warning',
+                                            closeWith: ['click']
+                                        });
+
+                                    }
+                                }
+                            });
+                        });
+                    }
+                }*/
+            }
         });
     });
 }
@@ -1151,31 +1335,23 @@ var $multievent = function(){
             var $nodename = $(this).attr('node');
             var $procname = $(this).attr('procname');
             var $td = $(this).parent().first().next();
-            var $place = $(this).parent().first().next().next().next().next().next().next().find('button').attr('place');
-            var $environment = $(this).parent().first().next().next().next().next().next().next().find('button').attr('env');
+                var $environment = $(this).parent().first().next().next().next().next().next().next().find('button').attr('env');
             $.ajax({
                 url: "/node/"+$nodename+"/process/"+$procname+"/"+$actname,
                 dataType: 'json',
                 success: function(data){
                     if(data['status'] == "Success"){
-                        if (data['data']['pid'] == 0 ){ $td.html("-"); }else{ $td.html(data['data']['pid']); }
-    
-                            if( $place == "node" ){
-                                $td = $td.next();
-                                $td.html(data['data']['name']);
-        
-                                $td = $td.next();
-                                $td.html(data['data']['group']);
-                            }else{
-                                $td = $td.next();
-                                $td.html($environment);
+                        if (data['data']['pid'] == 0 ){
+                            $td.html("-");
+                        }else{
+                            $td.html(data['data']['pid']);
+                        }
 
-                                $td = $td.next();
-                                $td.html(data['nodename']);
+                            $td = $td.next();
+                            $td.html(data['data']['name']);
 
-                                $td = $td.next();
-                                $td.html(data['data']['name']);
-                            }
+                            $td = $td.next();
+                            $td.html(data['data']['group']);
 
                             $td = $td.next();
                             $td.html(data['data']['description'].substring(17,24));
@@ -1189,7 +1365,7 @@ var $multievent = function(){
                                 $td.attr('class', "alert alert-warning");
                             }
                             $td.html(data['data']['statename']);
-    
+
                             $td = $td.next();
                             if( data['data']['state']==20){
                                 $restart = $td.children('button').first();
@@ -1197,28 +1373,28 @@ var $multievent = function(){
                                 $name = "/node/"+data['nodename'] + "/process/" + data['data']['group'] + ":" + data['data']['name'] + "/restart";
                                 $restart.attr('name',$name );
                                 $restart.attr('value',"Restart");
-                                $restart.html("Restart");
-    
+                                $restart.html("<i class=\"fa fa-repeat\" aria-hidden=\"true\"></i>");
+
                                 $td = $td.next();
                                 $stop = $td.children('button').first();
                                 $stop.attr('class',"btn btn-primary btn-block");
                                 $name2 = "/node/"+data['nodename'] + "/process/" + data['data']['group'] + ":" + data['data']['name'] + "/stop";
                                 $stop.attr('name',$name2 );
                                 $stop.attr('value',"Stop");
-                                $stop.html("Stop");
+                                $stop.html("<i class=\"fa fa-stop\" aria-hidden=\"true\"></i>");
                             }else if(data['data']['state']==0){
                                 $start = $td.children('button');
                                 $start.attr('class',"btn btn-primary btn-block");
                                 $name = "/node/"+data['nodename'] + "/process/" + data['data']['group'] + ":" + data['data']['name'] + "/start";
                                 $start.attr('name',$name );
                                 $start.attr('value',"Start");
-                                $start.html("Start");
+                                $start.html("<i class=\"fa fa-play\" aria-hidden=\"true\"></i>");
                                 $td = $td.next();
                                 $stop = $td.children('button').first();
-                                $stop.attr('class',"btn btn-primary btn-block");
                                 $stop.attr('class',"btn btn-primary btn-block disabled");
                                 $stop.attr('name'," ");
                                 $stop.attr('value',"Stop");
+                                $stop.html("<i class=\"fa fa-stop\" aria-hidden=\"true\"></i>");
                             }
                         
                         noty({
